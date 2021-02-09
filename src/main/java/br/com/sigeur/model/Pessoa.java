@@ -1,7 +1,6 @@
 package br.com.sigeur.model;
 
-import java.time.LocalDateTime;
-
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
@@ -16,8 +15,11 @@ public class Pessoa {
 	@Column(nullable = false, unique = true)
 	private String cpf;
 	
-	private LocalDateTime dataNascimento;
-	private char sexo;
+	@Temporal(TemporalType.DATE)
+	private Date dataNascimento;
+	
+	@Column(length = 1)
+	private String sexo;
 	
 	public Pessoa() {}
 
@@ -38,19 +40,19 @@ public class Pessoa {
 		this.cpf = cpf;
 	}
 
-	public LocalDateTime getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(LocalDateTime dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public char getSexo() {
+	public String getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(char sexo) {
+	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
 

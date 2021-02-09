@@ -1,9 +1,9 @@
 package br.com.sigeur.model;
 
+import java.util.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,7 +34,8 @@ public class Usuario extends Pessoa {
 			)
 	private List<Perfil> perfils;
 
-	private LocalDateTime dataCriacao;
+	@Temporal(TemporalType.DATE)
+	private Date dataCriacao;
 	
 	public Usuario() {}
 	
@@ -49,8 +50,8 @@ public class Usuario extends Pessoa {
 		this.dataCriacao = usuario.getDataCriacao();
 	}
 
-	public Usuario(Integer id, String nome, String cpf, LocalDateTime dataNascimento, char sexo, Cargo cargo,
-			List<Perfil> perfils, LocalDateTime dataCriacao) {
+	public Usuario(Integer id, String nome, String cpf, Date dataNascimento, String sexo, Cargo cargo,
+			List<Perfil> perfils, Date dataCriacao) {
 		this.id = id;
 		this.setNome(nome);
 		this.setCpf(cpf);
@@ -61,8 +62,8 @@ public class Usuario extends Pessoa {
 		this.dataCriacao = dataCriacao;
 	}
 
-	public Usuario(Integer id, String nome, String cpf, LocalDateTime dataNascimento, char sexo, Cargo cargo,
-			LocalDateTime dataCriacao) {
+	public Usuario(Integer id, String nome, String cpf, Date dataNascimento, String sexo, Cargo cargo,
+			Date dataCriacao) {
 		this.id = id;
 		this.setNome(nome);
 		this.setCpf(cpf);
@@ -96,14 +97,17 @@ public class Usuario extends Pessoa {
 		this.perfils = perfils;
 	}
 
-	public LocalDateTime getDataCriacao() {
+	public Date getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(LocalDateTime dataCriacao) {
+	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 	
-	
+	public void removePerfil(Perfil perfil) {
+		this.perfils.remove(perfil);
+		perfil.getUsuarios().remove(this);
+	}
 	
 }

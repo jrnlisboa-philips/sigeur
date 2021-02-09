@@ -1,5 +1,7 @@
 package br.com.sigeur.dto;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,11 +15,11 @@ public class UsuarioDto {
 	private Integer id;
 	private String nome;
 	private String cpf;
-	private LocalDateTime dataNascimento;
-	private char sexo;
+	private Date dataNascimento;
+	private String sexo;
 	private Cargo cargo;
-	private List<Perfil> perfils;
-	private LocalDateTime dataCriacao;
+	private List<PerfilDto> perfils;
+	private Date dataCriacao;
 	
 	public UsuarioDto() {}
 	
@@ -28,7 +30,7 @@ public class UsuarioDto {
 		this.dataNascimento = usuario.getDataNascimento();
 		this.sexo = usuario.getSexo();
 		this.cargo = usuario.getCargo();
-		this.perfils = usuario.getPerfils();
+		this.perfils = (usuario.getPerfils() != null && usuario.getPerfils().size() > 0)? PerfilDto.converter(usuario.getPerfils()) : new ArrayList<PerfilDto>();
 		this.dataCriacao = usuario.getDataCriacao();
 	}
 	
@@ -58,19 +60,19 @@ public class UsuarioDto {
 		this.cpf = cpf;
 	}
 
-	public LocalDateTime getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(LocalDateTime dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public char getSexo() {
+	public String getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(char sexo) {
+	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
 
@@ -82,19 +84,19 @@ public class UsuarioDto {
 		this.cargo = cargo;
 	}
 
-	public List<Perfil> getPerfils() {
+	public List<PerfilDto> getPerfils() {
 		return perfils;
 	}
 
-	public void setPerfils(List<Perfil> perfils) {
+	public void setPerfils(List<PerfilDto> perfils) {
 		this.perfils = perfils;
 	}
 
-	public LocalDateTime getDataCriacao() {
+	public Date getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(LocalDateTime dataCriacao) {
+	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 

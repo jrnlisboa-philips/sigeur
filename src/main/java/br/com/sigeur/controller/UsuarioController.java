@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.sigeur.dto.UsuarioDto;
+import br.com.sigeur.model.Perfil;
 import br.com.sigeur.model.Usuario;
 import br.com.sigeur.repository.UsuarioRepository;
 
@@ -72,5 +73,36 @@ public class UsuarioController {
 		usuarioDeleted.put("deleted", true);
 		
 		return usuarioDeleted;
+	}
+	
+
+	
+	@PostMapping("/perfil")
+	public ResponseEntity<UsuarioDto> savePerfilUsuario(@Valid @RequestBody Usuario usuarioR)
+			throws Exception{
+		Usuario usuario = usuarioRepository.findById(usuarioR.getId()).orElseThrow(
+				() -> new Exception("Usuário não encontrado"));
+		
+		usuario.getPerfils().add(usuarioR.getPerfils().get(0));
+		return ResponseEntity.ok().body(new UsuarioDto(usuarioRepository.save(usuario)));
+	}
+	
+	@DeleteMapping("/perfil/{id}/{idUsuario}")
+	public Map<String, Boolean> deletePerfilUsuario(@Valid @PathVariable("id") Integer id,
+			@PathVariable("idUsuario") Integer idUsuario) 
+		throws Exception{
+		Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(
+				() -> new Exception("Usuário não encontrado"));
+		
+		for(Perfil perf: usuario.getPerfils()) {
+			if(perf.getId() == id)
+				usuario.removePerfil(perf);
+		}
+		usuarioRepository.save(usuario);
+		
+		Map<String, Boolean> perfilDel = new HashMap<String, Boolean>();
+		perfilDel.put("deleted", true);
+		
+		return perfilDel;
 	}
 }
